@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlhfrvbqfkvm"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_5qw2r"]
+[ext_resource type="PackedScene" uid="uid://qsurlaqfb6gw" path="res://scenes/player.tscn" id="2_3r507"]
+[ext_resource type="PackedScene" uid="uid://bggml1s1qei0k" path="res://scenes/item.tscn" id="2_wsjuh"]
+[ext_resource type="Texture2D" uid="uid://bgoiq3ulq4sod" path="res://assets/floor.png" id="3_u74hx"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_5qw2r")
+item_scene = ExtResource("2_wsjuh")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 301.0
+offset_bottom = 199.0
+color = Color(0.0588235, 0, 0.584314, 1)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = -981.0
+offset_top = 168.0
+offset_right = 1077.0
+offset_bottom = 208.0
+texture = ExtResource("3_u74hx")
+expand_mode = 3
+stretch_mode = 1
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+layer = 5
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+offset_right = 301.0
+offset_bottom = 199.0
+color = Color(0.0901961, 0.45098, 1, 0.698039)
+
+[node name="high Scores" type="Label" parent="GameOver"]
+offset_left = 79.0
+offset_top = 20.0
+offset_right = 219.0
+offset_bottom = 137.0
+size_flags_horizontal = 4
+
+[node name="Restart" type="Button" parent="GameOver"]
+anchors_preset = -1
+anchor_bottom = 0.15
+offset_left = 107.0
+offset_top = 144.0
+offset_right = 197.0
+offset_bottom = 145.0
+text = "Restart"
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 6
+
+[node name="Score" type="Label" parent="UI"]
+offset_right = 1.0
+offset_bottom = 23.0
+
+[node name="Label" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 23.0
+grow_horizontal = 0
+horizontal_alignment = 2
+
+[node name="Player" parent="." instance=ExtResource("2_3r507")]
+z_index = 37
+position = Vector2(152, 186)
+
+[node name="CountDown" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+
+[connection signal="pressed" from="GameOver/Restart" to="." method="_on_restart_pressed"]
+[connection signal="timeout" from="CountDown" to="." method="_on_count_down_timeout"]
